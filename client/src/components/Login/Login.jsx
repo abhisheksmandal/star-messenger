@@ -32,6 +32,30 @@ export const Login = () => {
       onSubmit={(values, actions) => {
         alert(JSON.stringify(values, null, 2));
         actions.resetForm();
+        const vals = { ...values };
+        fetch("http://localhost:4000/auth/login", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(vals),
+        })
+          .catch((err) => {
+            return;
+          })
+          .then((res) => {
+            if (!res || !res.ok || res.status >= 400) {
+              return;
+            }
+            return res.json;
+          })
+          .then((data) => {
+            if (!data) {
+              return;
+            }
+            console.log(data);
+          });
       }}
     >
       {/* {(formik) => ( */}
@@ -100,7 +124,7 @@ export const Login = () => {
           <Button colorScheme="teal" type="submit">
             Log In
           </Button>
-          <Button onClick={() => navigate("/register")}>Create Accounts</Button>
+          <Button onClick={() => navigate("/signup")}>Create Accounts</Button>
         </ButtonGroup>
       </VStack>
       {/* )} */}
