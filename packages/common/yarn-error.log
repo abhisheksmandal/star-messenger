@@ -1,0 +1,32 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Abhishek\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add yup
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\MongoDB\Server\6.0\bin;C:\Program Files\Git\cmd;C:\MinGW\bin;C:\Users\Abhishek\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Abhishek\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Abhishek\AppData\Local\Programs\Python\Python310\;C:\Users\Abhishek\AppData\Local\Microsoft\WindowsApps;C:\Users\Abhishek\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Abhishek\AppData\Roaming\npm;C:\Users\Abhishek\AppData\Roaming\nvm;C:\Program Files\nodejs
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.13.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: connect ECONNABORTED 2606:4700::6810:1823:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1487:16)
+
+npm manifest: 
+  {
+    "name": "@star-messenger/common",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
