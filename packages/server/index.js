@@ -4,8 +4,9 @@ const { Server } = require("socket.io");
 const app = express();
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
-
+const session = require("express-session");
 const server = require("http").createServer(app);
+require("dotenv").config();
 
 const io = new Server(server, {
   cors: {
@@ -23,11 +24,24 @@ app.use(
 );
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    credentials: true,
+    name: "sid",
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.ENVIRONMENT === "production",
+      httpOnly: true,
+      sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
+    },
+  })
+);
 app.use("/auth", authRouter);
 
-app.get("/", (req, res) => {
-  res.json("hi");
-});
+// app.get("/", (req, res) => {
+//   res.json("hi");
+// });
 
 io.on("connect", () => {});
 
