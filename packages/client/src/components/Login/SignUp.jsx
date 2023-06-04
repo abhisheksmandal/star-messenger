@@ -1,12 +1,15 @@
-import { VStack, ButtonGroup, Button, Heading } from "@chakra-ui/react";
-import React from "react";
+import { VStack, ButtonGroup, Button, Heading, Text } from "@chakra-ui/react";
+import React, { useContext, useState } from "react";
 import { Form, Formik } from "formik";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { TextField } from "./TextField";
 import { useNavigate } from "react-router-dom";
+import { AccountContext } from "../AccountContext";
 const { formSchema } = require("@star-messenger/common");
 
 export const SignUp = () => {
+  const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   return (
@@ -35,8 +38,12 @@ export const SignUp = () => {
             return res.json;
           })
           .then((data) => {
-            if (!data) {
-              return;
+            if (!data) return;
+            setUser({ ...data });
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
             }
             console.log(data);
           });
@@ -51,7 +58,9 @@ export const SignUp = () => {
         spacing="1rem"
       >
         <Heading>Sign Up</Heading>
-
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextField
           label="Username"
           name="username"

@@ -1,21 +1,25 @@
 import {
   VStack,
   ButtonGroup,
-  FormLabel,
-  FormControl,
+  // FormLabel,
+  // FormControl,
   Button,
-  FormErrorMessage,
-  Input,
+  // FormErrorMessage,
+  // Input,
   Heading,
+  Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { Form, Formik, useFormik } from "formik";
+import React, { useContext, useState } from "react";
+import { Form, Formik } from "formik";
 
 import { TextField } from "./TextField";
 import { useNavigate } from "react-router-dom";
+import { AccountContext } from "../AccountContext";
 const { formSchema } = require("@star-messenger/common");
 
 export const Login = () => {
+  const { setUser } = useContext(AccountContext);
+  // const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
@@ -43,14 +47,17 @@ export const Login = () => {
             return res.json;
           })
           .then((data) => {
-            if (!data) {
-              return;
+            if (!data) return;
+            setUser({ ...data });
+            if (data.status) {
+              // setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
             }
-            console.log(data);
+            console.log(...data);
           });
       }}
     >
-      {/* {(formik) => ( */}
       <VStack
         as={Form}
         w={{ base: "90%", md: "500px" }}
@@ -60,6 +67,10 @@ export const Login = () => {
         spacing="1rem"
       >
         <Heading>Log In</Heading>
+
+        <Text as="p" color="red.500">
+          {/* {error} */}
+        </Text>
         {/* <FormControl
             isInvalid={formik.errors.username && formik.touched.username}
           >
@@ -119,7 +130,6 @@ export const Login = () => {
           <Button onClick={() => navigate("/signup")}>Create Accounts</Button>
         </ButtonGroup>
       </VStack>
-      {/* )} */}
     </Formik>
   );
 };
