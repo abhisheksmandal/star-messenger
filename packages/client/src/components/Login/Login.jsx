@@ -19,7 +19,7 @@ const { formSchema } = require("@star-messenger/common");
 
 export const Login = () => {
   const { setUser } = useContext(AccountContext);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
@@ -50,11 +50,11 @@ export const Login = () => {
             if (!data) return;
             setUser({ ...data });
             if (data.status) {
-              // setError(data.status);
+              setError(data.status);
             } else if (data.loggedIn) {
               navigate("/home");
             }
-            console.log(...data);
+            console.log(data);
           });
       }}
     >
@@ -69,7 +69,7 @@ export const Login = () => {
         <Heading>Log In</Heading>
 
         <Text as="p" color="red.500">
-          {/* {error} */}
+          {error}
         </Text>
         {/* <FormControl
             isInvalid={formik.errors.username && formik.touched.username}

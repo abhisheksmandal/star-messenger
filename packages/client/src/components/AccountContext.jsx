@@ -12,6 +12,7 @@ const UserContext = ({ children }) => {
     })
       .catch((err) => {
         setUser({ loggedIn: false });
+        return;
       })
       .then((r) => {
         if (!r || !r.ok || r.status >= 400) {
