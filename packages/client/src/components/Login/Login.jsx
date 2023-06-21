@@ -127,7 +127,7 @@ export const Login = () => {
           <Button colorScheme="teal" type="submit">
             Log In
           </Button>
-          <Button onClick={() => navigate("/signup")}>Create Accounts</Button>
+          <Button onClick={() => navigate("/signup")}>Create Account</Button>
         </ButtonGroup>
       </VStack>
     </Formik>
