@@ -1,0 +1,16 @@
+{
+    "author": "Abhishek Mandal",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "private": "true",
+    "workspaces": [
+      "packages/*"
+    ],
+    "scripts": {
+      "dev:server": "yarn workspace @star-messenger/server dev",
+      "dev:client": "yarn workspace @star-messenger/client start",
+      "build:client": "yarn workspace @star-messenger/client build",
+      "start": "yarn workspace @star-messenger/server start"
+    }
+  }
