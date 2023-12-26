@@ -5,10 +5,11 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
 const session = require("express-session");
-require("dotenv").config();
 const Redis = require("ioredis");
 const server = require("http").createServer(app);
-const RedisStore = require("connect-redis")(session);
+const RedisStore = require("connect-redis").default;
+require("dotenv").config();
+
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
