@@ -7,8 +7,8 @@ export const FriendContext = createContext();
 
 const Home = () => {
   const [friendList, setFriendList] = useState([
-    { username: "Twyla", connected: true },
-    { username: "Abhishek", connected: false },
+    { username: "Friend 1", connected: true },
+    { username: "Friend 2", connected: false },
   ]);
   return (
     <FriendContext.Provider value={{ friendList, setFriendList }}>

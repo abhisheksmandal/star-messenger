@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { useContext } from "react";
-import { TextField } from "./TextField";
+import { TextField } from "../TextField";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { formSchema } from "@star-messenger/common";
