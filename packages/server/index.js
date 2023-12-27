@@ -9,6 +9,7 @@ const {
   wrap,
   corsConfig,
 } = require("./controllers/serverController");
+const { authorizeUser } = require("./controllers/socketController");
 const server = require("http").createServer(app);
 require("dotenv").config();
 
@@ -20,8 +21,10 @@ app.use(cors(corsConfig));
 app.use(express.json());
 app.use(sessionMiddleware);
 app.use("/auth", authRouter);
+
 io.use(wrap(sessionMiddleware));
-io.on("connect", (socket) => {
+io.use(authorizeUser);
+io.on("connect", socket => {
   console.log(socket.id);
   console.log(socket.request.session.user.username);
 });
