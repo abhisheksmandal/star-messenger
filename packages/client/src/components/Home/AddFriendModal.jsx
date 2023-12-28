@@ -6,14 +6,23 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@chakra-ui/modal";
-import { Button, ModalOverlay } from "@chakra-ui/react";
+import { Button, Heading, ModalOverlay } from "@chakra-ui/react";
 import { TextField } from "../TextField";
+import socket from "../../socket";
 import { Formik, Form } from "formik";
 import { friendSchema } from "@star-messenger/common";
+import { useCallback, useContext, useState } from "react";
+import { FriendContext } from "./Home";
 
 const AddFriendModal = ({ isOpen, onClose }) => {
+  const [error, setError] = useState("");
+  const closeModal = useCallback(() => {
+    setError("");
+    onClose();
+  }, [onClose]);
+  const { setFriendList } = useContext(FriendContext);
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={closeModal} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Add a friend!</ModalHeader>
@@ -21,13 +30,26 @@ const AddFriendModal = ({ isOpen, onClose }) => {
         <Formik
           initialValues={{ friendName: "" }}
           onSubmit={(values) => {
-            onClose();
-            // alert(JSON.stringify(values, null, 2));
+            socket.emit(
+              "add_friend",
+              values.friendName,
+              ({ errorMsg, done }) => {
+                if (done) {
+                  setFriendList((c) => [values.friendName, ...c]);
+                  closeModal();
+                  return;
+                }
+                setError(errorMsg);
+              }
+            );
           }}
           validationSchema={friendSchema}
         >
           <Form>
             <ModalBody>
+              <Heading as="p" fontSize="xl" color="red.500" textAlign="center">
+                {error}
+              </Heading>
               <TextField
                 label="Friend's name"
                 placeholder="Enter friend's username..."
