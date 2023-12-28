@@ -22,7 +22,7 @@ const AddFriendModal = ({ isOpen, onClose }) => {
   }, [onClose]);
   const { setFriendList } = useContext(FriendContext);
   return (
-    <Modal isOpen={isOpen} onClose={closeModal} isCentered>
+    <Modal isOpen={isOpen} onClose={closeModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Add a friend!</ModalHeader>
@@ -33,9 +33,9 @@ const AddFriendModal = ({ isOpen, onClose }) => {
             socket.emit(
               "add_friend",
               values.friendName,
-              ({ errorMsg, done }) => {
+              ({ errorMsg, done, newFriend }) => {
                 if (done) {
-                  setFriendList((c) => [values.friendName, ...c]);
+                  setFriendList((c) => [newFriend, ...c]);
                   closeModal();
                   return;
                 }

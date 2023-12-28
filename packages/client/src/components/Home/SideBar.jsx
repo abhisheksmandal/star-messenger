@@ -33,11 +33,11 @@ const SideBar = () => {
           {friendList.map((friend) => (
             <HStack as={Tab} key={`friend:${friend}`}>
               <Circle
-                bg={friend.connected ? "green.500" : "red.500"}
+                bg={"" + friend.connected === "true" ? "green.500" : "red.500"}
                 w="10px"
                 h="10px"
               />
-              <Text>{friend}</Text>
+              <Text>{friend.username}</Text>
             </HStack>
           ))}
         </VStack>

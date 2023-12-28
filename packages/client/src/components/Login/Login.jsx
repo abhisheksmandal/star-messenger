@@ -4,6 +4,7 @@ import {
   FormControl,
   FormLabel,
   Button,
+  Text,
   FormErrorMessage,
   Input,
   Heading,
@@ -14,9 +15,11 @@ import { TextField } from "../TextField";
 import { useNavigate } from "react-router-dom";
 import { formSchema } from "@star-messenger/common";
 import { AccountContext } from "../AccountContext";
+import { useState } from "react";
 
 export const Login = () => {
   const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
@@ -48,7 +51,11 @@ export const Login = () => {
               return;
             }
             setUser({ ...data });
-            navigate("/home");
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
+            }
           });
       }}
     >
@@ -61,6 +68,9 @@ export const Login = () => {
         spacing="1rem"
       >
         <Heading>Log In</Heading>
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextField
           name="username"
           placeholder="Enter username"
