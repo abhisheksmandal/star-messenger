@@ -2,11 +2,11 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
-} from "@chakra-ui/react";
+} from "@chakra-ui/form-control";
+import { Input } from "@chakra-ui/input";
 import { Field, useField } from "formik";
 
-export const TextField = ({ label, ...props }) => {
+const TextField = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
     <FormControl isInvalid={meta.touched && meta.error}>
@@ -16,3 +16,5 @@ export const TextField = ({ label, ...props }) => {
     </FormControl>
   );
 };
+
+export default TextField;
