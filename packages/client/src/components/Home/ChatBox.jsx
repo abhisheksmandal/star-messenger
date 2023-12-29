@@ -5,10 +5,11 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import socket from "../../socket";
 import { useContext } from "react";
-import { MessagesContext } from "./Home";
+import { MessagesContext, SocketContext } from "./Home";
 
 const ChatBox = ({ userid }) => {
   const { setMessages } = useContext(MessagesContext);
+  const { socket } = useContext(SocketContext);
   return (
     <Formik
       initialValues={{ message: "" }}
@@ -37,4 +38,5 @@ const ChatBox = ({ userid }) => {
     </Formik>
   );
 };
+
 export default ChatBox;

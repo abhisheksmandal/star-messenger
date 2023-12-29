@@ -1,24 +1,22 @@
+import { Button } from "@chakra-ui/button";
+import { useDisclosure } from "@chakra-ui/hooks";
 import { ChatIcon } from "@chakra-ui/icons";
 import {
-  Button,
   Circle,
   Divider,
-  HStack,
   Heading,
-  Tab,
+  HStack,
   Text,
-  TabList,
   VStack,
-  useDisclosure,
-} from "@chakra-ui/react";
-import React, { useContext } from "react";
-import { FriendContext } from "./Home";
+} from "@chakra-ui/layout";
+import { Tab, TabList } from "@chakra-ui/tabs";
+import { useContext } from "react";
 import AddFriendModal from "./AddFriendModal";
+import { FriendContext } from "./Home";
 
 const SideBar = () => {
   const { friendList } = useContext(FriendContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <>
       <VStack py="1.4rem">
@@ -33,9 +31,9 @@ const SideBar = () => {
           {friendList.map((friend) => (
             <HStack as={Tab} key={`friend:${friend}`}>
               <Circle
-                bg={"" + friend.connected === "true" ? "green.500" : "red.500"}
-                w="10px"
-                h="10px"
+                bg={"" + friend.connected === "true" ? "green.700" : "red.500"}
+                w="20px"
+                h="20px"
               />
               <Text>{friend.username}</Text>
             </HStack>

@@ -12,7 +12,7 @@ import socket from "../../socket";
 import { Formik, Form } from "formik";
 import { friendSchema } from "@star-messenger/common";
 import { useCallback, useContext, useState } from "react";
-import { FriendContext } from "./Home";
+import { FriendContext, SocketContext } from "./Home";
 
 const AddFriendModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
@@ -21,6 +21,7 @@ const AddFriendModal = ({ isOpen, onClose }) => {
     onClose();
   }, [onClose]);
   const { setFriendList } = useContext(FriendContext);
+  const { socket } = useContext(SocketContext);
   return (
     <Modal isOpen={isOpen} onClose={closeModal}>
       <ModalOverlay />
@@ -47,7 +48,7 @@ const AddFriendModal = ({ isOpen, onClose }) => {
         >
           <Form>
             <ModalBody>
-              <Heading as="p" fontSize="xl" color="red.500" textAlign="center">
+              <Heading fontSize="xl" color="red.500" textAlign="center">
                 {error}
               </Heading>
               <TextField
