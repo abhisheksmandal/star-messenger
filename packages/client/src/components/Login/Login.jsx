@@ -1,23 +1,12 @@
-import {
-  VStack,
-  ButtonGroup,
-  FormControl,
-  FormLabel,
-  Button,
-  Text,
-  FormErrorMessage,
-  Input,
-  Heading,
-} from "@chakra-ui/react";
-import { Form, Formik } from "formik";
-import React, { useContext } from "react";
-import { TextField } from "../TextField";
-import { useNavigate } from "react-router-dom";
+import { Button, ButtonGroup, Heading, Text, VStack } from "@chakra-ui/react";
 import { formSchema } from "@star-messenger/common";
+import { Form, Formik } from "formik";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { AccountContext } from "../AccountContext";
-import { useState } from "react";
+import TextField from "../TextField";
 
-export const Login = () => {
+const Login = () => {
   const { setUser } = useContext(AccountContext);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -25,10 +14,9 @@ export const Login = () => {
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={formSchema}
-      onSubmit={(values, action) => {
+      onSubmit={(values, actions) => {
         const vals = { ...values };
-        // alert(JSON.stringify(values, null, 2));
-        action.resetForm();
+        actions.resetForm();
         fetch("http://localhost:4000/auth/login", {
           method: "POST",
           credentials: "include",
@@ -86,9 +74,9 @@ export const Login = () => {
           type="password"
         />
 
-        <ButtonGroup>
+        <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type="submit">
-            Login
+            Log In
           </Button>
           <Button onClick={() => navigate("/register")}>Create Account</Button>
         </ButtonGroup>
@@ -96,3 +84,5 @@ export const Login = () => {
     </Formik>
   );
 };
+
+export default Login;

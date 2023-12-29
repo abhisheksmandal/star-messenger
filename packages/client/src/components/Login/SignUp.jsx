@@ -1,32 +1,23 @@
-import {
-  VStack,
-  ButtonGroup,
-  FormControl,
-  FormLabel,
-  Button,
-  FormErrorMessage,
-  Input,
-  Heading,
-} from "@chakra-ui/react";
-import { Form, Formik } from "formik";
-import React, { useContext } from "react";
-import { TextField } from "../TextField";
-import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { Button, ButtonGroup, Heading, Text, VStack } from "@chakra-ui/react";
 import { formSchema } from "@star-messenger/common";
+import { Form, Formik } from "formik";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { AccountContext } from "../AccountContext";
+import TextField from "../TextField";
 
-export const SignUp = () => {
+const SignUp = () => {
   const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
       validationSchema={formSchema}
-      onSubmit={(values, action) => {
+      onSubmit={(values, actions) => {
         const vals = { ...values };
-        // alert(JSON.stringify(values, null, 2));
-        action.resetForm();
+        actions.resetForm();
         fetch("http://localhost:4000/auth/register", {
           method: "POST",
           credentials: "include",
@@ -49,7 +40,12 @@ export const SignUp = () => {
               return;
             }
             setUser({ ...data });
-            navigate("/home");
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              localStorage.setItem("token", data.token);
+              navigate("/home");
+            }
           });
       }}
     >
@@ -62,6 +58,9 @@ export const SignUp = () => {
         spacing="1rem"
       >
         <Heading>Sign Up</Heading>
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextField
           name="username"
           placeholder="Enter username"
@@ -77,14 +76,11 @@ export const SignUp = () => {
           type="password"
         />
 
-        <ButtonGroup>
+        <ButtonGroup pt="1rem">
           <Button colorScheme="teal" type="submit">
-            Register
+            Create Account
           </Button>
-          <Button
-            onClick={() => navigate("/login")}
-            leftIcon={<ArrowBackIcon />}
-          >
+          <Button onClick={() => navigate("/")} leftIcon={<ArrowBackIcon />}>
             Back
           </Button>
         </ButtonGroup>
@@ -92,3 +88,5 @@ export const SignUp = () => {
     </Formik>
   );
 };
+
+export default SignUp;
