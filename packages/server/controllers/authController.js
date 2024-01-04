@@ -2,7 +2,7 @@ const pool = require("../db");
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
-module.exports.handleLogin = (req, res) => {
+const handleLogin = (req, res) => {
   if (req.session.user && req.session.user.username) {
     res.json({ loggedIn: true, username: req.session.username });
   } else {
@@ -10,7 +10,7 @@ module.exports.handleLogin = (req, res) => {
   }
 };
 
-module.exports.attemptLogin = async (req, res) => {
+const attemptLogin = async (req, res) => {
   console.log(req.session);
 
   const potentialLogin = await pool.query(
@@ -38,7 +38,7 @@ module.exports.attemptLogin = async (req, res) => {
   }
 };
 
-module.exports.attemptRegister = async (req, res) => {
+const attemptRegister = async (req, res) => {
   const existingUser = await pool.query(
     "SELECT username from users WHERE username=$1",
     [req.body.username]
@@ -61,4 +61,10 @@ module.exports.attemptRegister = async (req, res) => {
   } else {
     res.json({ loggedIn: false, status: "Username taken" });
   }
+};
+
+module.exports = {
+  attemptLogin,
+  attemptRegister,
+  handleLogin,
 };

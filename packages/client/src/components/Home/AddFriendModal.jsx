@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/modal";
 import { Button, Heading, ModalOverlay } from "@chakra-ui/react";
 import TextField from "../TextField";
-import socket from "../../socket";
 import { Formik, Form } from "formik";
 import { friendSchema } from "@star-messenger/common";
 import { useCallback, useContext, useState } from "react";

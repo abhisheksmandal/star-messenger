@@ -6,7 +6,7 @@ const {
   attemptLogin,
   attemptRegister,
 } = require("../controllers/authController");
-const { rateLimiter } = require("../controllers/rateLimiter");
+const rateLimiter = require("../controllers/rateLimiter");
 
 router
   .route("/login")
